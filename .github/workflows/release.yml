@@ -21,7 +21,7 @@ jobs:
       - run: docker compose build
       - run: docker compose up -d
       - run: docker compose logs db
-      - run: pytest tests --junit-xml=test-results.xml
+      - run: pytest tests --junitxml=test-results.xml
         env:
           BASE_URL: http://127.0.0.1:8002
 
