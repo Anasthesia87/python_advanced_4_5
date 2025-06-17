@@ -1,14 +1,12 @@
 # Use postgres/example user/password credentials
-version: '3.11'
+version: '3.9'
 
 services:
-
   app:
     # image: qa-guru-app
     build: .
     environment:
-      - DATABASE_ENGINE=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_USER}
-      - BASE_URL=${BASE_URL}
+      DATABASE_ENGINE: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_USER}
     ports:
       - 8002:80
     depends_on:
@@ -27,10 +25,10 @@ services:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
     # Use github secrets
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
     volumes:
-      - db-models:/var/lib/postgresql/models
+      - db-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
 
