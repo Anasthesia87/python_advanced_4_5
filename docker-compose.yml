@@ -1,7 +1,7 @@
 # Use postgres/example user/password credentials
+version: '3.11'
 
 services:
-
   app:
     # image: qa-guru-app
     build: .
@@ -15,7 +15,7 @@ services:
   db:
     image: postgres
     restart: always
-    # set shared memory limit when using docker compose
+    # set shared memory limit when using docker-compose
     shm_size: 128mb
     # or set shared memory limit when deploy via swarm stack
     #volumes:
@@ -24,13 +24,13 @@ services:
     #    tmpfs:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-      # Use github secrets
+    # Use github secrets
       POSTGRES_USER:
       POSTGRES_PASSWORD:
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
-      -  5432:5432
+      - 5432:5432
 
   adminer:
     image: adminer
