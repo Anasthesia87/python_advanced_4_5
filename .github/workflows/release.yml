@@ -20,8 +20,9 @@ jobs:
       - run: docker compose build
       - run: docker compose up -d
       - run: sleep 5
-      - run: pytest DATABASE_ENGINE="postgresql+psycopg2://postgres:example@localhost:5432/postgres" --junitxml=test-results.xml
+      - run: pytest tests --junitxml=test-results.xml
         env:
+          DATABASE_ENGINE: postgresql+psycopg2://ci:postgres@localhost:5432/postgres
           BASE_URL: http://127.0.0.1:8002
 
       - run: docker compose logs app
