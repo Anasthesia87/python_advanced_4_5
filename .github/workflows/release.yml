@@ -1,6 +1,6 @@
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -9,21 +9,25 @@ jobs:
     name: Test app
     runs-on: ubuntu-latest
     env:
-      POSTGRES_USER: ci
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup python 3.13
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
           cache: 'pip'
       - run: pip install --upgrade -r requirements.txt
       - run: docker compose build
       - run: docker compose up -d
       - run: sleep 5
-      - run: pytest tests/api --junit-xml=test-results.xml --env=rc -s
+      - name: Run tests
+        run: pytest tests --junit-xml=test-results.xml --env=rc -s
         env:
-          BASE_URL: http://0.0.0.0:8002
+          BASE_URL: http://localhost:8002
+          DATABASE_ENGINE: postgresql+psycopg2://${{ env.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_USER }
 
       - run: docker compose logs app
         if: always()
