@@ -1,5 +1,5 @@
 # Use postgres/example user/password credentials
-version: '3'
+version: '3.11'
 
 services:
   app:
@@ -10,11 +10,17 @@ services:
     ports:
       - 8002:80
     depends_on:
-      - localhost
+      db:
+        condition: service_healthy
 
   db:
     image: postgres
     restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     # set shared memory limit when using docker-compose
     shm_size: 128mb
     # or set shared memory limit when deploy via swarm stack
@@ -24,10 +30,9 @@ services:
     #    tmpfs:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-    # Use github secrets
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: example  # Используем стандартный пароль
-        POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:

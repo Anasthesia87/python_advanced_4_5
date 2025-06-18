@@ -8,11 +8,9 @@ jobs:
     name: Test app
     runs-on: ubuntu-latest
     env:
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: example
-        POSTGRES_DB: postgres
-#POSTGRES_USER: postgres
-#POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: postgres
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
