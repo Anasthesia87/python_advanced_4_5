@@ -24,7 +24,7 @@ jobs:
       - run: docker compose up -d
       - run: sleep 5
       - name: Run tests
-        run: pytest tests --junit-xml=test-results.xml --env=rc -s
+        run: pytest tests --junit-xml=test-results.xml
         env:
           DATABASE_ENGINE: postgresql+psycopg2://postgres:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/postgres
           APP_URL: http://localhost:8000
