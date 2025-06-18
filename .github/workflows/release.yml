@@ -26,10 +26,8 @@ jobs:
       - name: Run tests
         run: pytest tests --junit-xml=test-results.xml --env=rc -s
         env:
-          BASE_URL: http://localhost:8002
-          DATABASE_ENGINE: postgresql+psycopg2://${{POSTGRES_USER}}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{POSTGRES_USER}}
-          POSTGRES_USER: postgres  # Определяем переменную здесь
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          APP_URL: http://localhost:8000
+          DATABASE_ENGINE: postgresql+psycopg2://${{ env.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_USER }}
       - run: docker compose logs app
         if: always()
 
