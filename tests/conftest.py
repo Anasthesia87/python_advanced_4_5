@@ -3,7 +3,7 @@ from http import HTTPStatus
 
 import dotenv
 import pytest
-from sqlmodel import Session, select
+from sqlmodel import Session, select, SQLModel
 from app.database.engine import engine
 import requests
 from app.models.User import UserData
@@ -20,6 +20,9 @@ def envs():
 def base_url():
     return BASE_URL
 
+@pytest.fixture(scope="session", autouse=True)
+def create_tables():
+    SQLModel.metadata.create_all(engine)
 
 @pytest.fixture
 def test_data_users():
