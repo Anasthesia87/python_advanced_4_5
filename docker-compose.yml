@@ -1,12 +1,12 @@
 # Use postgres/example user/password credentials
-version: '3.9'
+version: '3'
 
 services:
   app:
     # image: qa-guru-app
     build: .
     environment:
-      DATABASE_ENGINE: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_DB}
+      DATABASE_ENGINE: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       - 8002:80
     depends_on:
