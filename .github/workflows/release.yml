@@ -19,7 +19,7 @@ jobs:
       - run: pip install --upgrade -r requirements.txt
       - run: docker compose build
       - run: docker compose up -d
-      - run: sleep 5
+      - run: sleep 10
       - run: pytest tests --junitxml=test-results.xml
         env:
           DATABASE_ENGINE: postgresql+psycopg2://ci:postgres@localhost:5432/postgres
