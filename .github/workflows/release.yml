@@ -28,7 +28,8 @@ jobs:
         env:
           BASE_URL: http://localhost:8002
           DATABASE_ENGINE: postgresql+psycopg2://${{POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{POSTGRES_USER }}
-
+          POSTGRES_USER: postgres  # Определяем переменную здесь
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       - run: docker compose logs app
         if: always()
 
