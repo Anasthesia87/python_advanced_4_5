@@ -127,7 +127,7 @@ def clear_database():
 @pytest.fixture(scope="module")
 def fill_test_data(base_url, clear_database):
     clear_database
-    with open("users.json") as f:
+    with open("tests/users.json") as f:
         test_data_users = json.load(f)
     api_users = []
     for user in test_data_users:
